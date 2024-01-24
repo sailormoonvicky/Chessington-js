@@ -4,10 +4,9 @@ import Piece from './piece';
 
 export default class Pawn extends Piece {
     constructor(player) {
-        super(player);
+        super(player, 'pawn');
     }
 
-   
     getAvailableMoves(board) {
         let location = board.findPiece(this);
         const whiteOptions = [Square.at(location.row + 1, location.col), Square.at(location.row + 2, location.col)];
@@ -31,10 +30,10 @@ export default class Pawn extends Piece {
             // Add logic to allow the pawn to move diagonally if there is an opposing piece to take
             const leftDiagonal = Square.at(location.row + 1, location.col - 1);
             const rightDiagonal = Square.at(location.row + 1, location.col + 1);
-            if (board.getPiece(leftDiagonal) !== undefined && board.getPiece(leftDiagonal).player === Player.BLACK) {
+            if (board.getPiece(leftDiagonal) !== undefined && board.getPiece(leftDiagonal).player === Player.BLACK && board.getPiece(leftDiagonal).type !== 'king') {
                 moves.push(leftDiagonal);
             }
-            if (board.getPiece(rightDiagonal) !== undefined && board.getPiece(rightDiagonal).player === Player.BLACK) {
+            if (board.getPiece(rightDiagonal) !== undefined && board.getPiece(rightDiagonal).player === Player.BLACK && board.getPiece(rightDiagonal).type !== 'king') {
                 moves.push(rightDiagonal);
             }
             return moves;
@@ -52,10 +51,10 @@ export default class Pawn extends Piece {
             // Add logic to allow the pawn to move diagonally if there is an opposing piece to take
             const leftDiagonal = Square.at(location.row - 1, location.col - 1);
             const rightDiagonal = Square.at(location.row - 1, location.col + 1);
-            if (board.getPiece(leftDiagonal) !== undefined && board.getPiece(leftDiagonal).player === Player.WHITE) {
+            if (board.getPiece(leftDiagonal) !== undefined && board.getPiece(leftDiagonal).player === Player.WHITE && board.getPiece(leftDiagonal).type !== 'king') {
                 moves.push(leftDiagonal);
             }
-            if (board.getPiece(rightDiagonal) !== undefined && board.getPiece(rightDiagonal).player === Player.WHITE) {
+            if (board.getPiece(rightDiagonal) !== undefined && board.getPiece(rightDiagonal).player === Player.WHITE && board.getPiece(rightDiagonal).type !== 'king') {
                 moves.push(rightDiagonal);
             }
             return moves;
