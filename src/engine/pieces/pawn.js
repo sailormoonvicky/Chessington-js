@@ -38,8 +38,14 @@ export default class Pawn extends Piece {
         let location = board.findPiece(this);
         const whiteOptions = [Square.at(location.row + 1, location.col), Square.at(location.row + 2, location.col)];
         const blackOptions = [Square.at(location.row - 1, location.col), Square.at(location.row - 2, location.col)];
+        const moves = [];
+    
     
         if (this.player === Player.WHITE) {
+            if (location.row === 7) {
+                return [];
+            }
+            
             if (board.getPiece(whiteOptions[0]) === undefined) {
                 if (location.row === 1 && board.getPiece(whiteOptions[1]) === undefined) {
                     return [whiteOptions[0], whiteOptions[1]];
@@ -49,7 +55,24 @@ export default class Pawn extends Piece {
             } else {
                 return [];
             }
+
+            // Add logic to allow the pawn to move diagonally if there is an opposing piece to take
+            const leftDiagonal = Square.at(location.row + 1, location.col - 1);
+            const rightDiagonal = Square.at(location.row + 1, location.col + 1);
+            if (board.getPiece(leftDiagonal) !== undefined && board.getPiece(leftDiagonal).player === Player.BLACK) {
+                moves.push(leftDiagonal);
+            }
+            if (board.getPiece(rightDiagonal) !== undefined && board.getPiece(rightDiagonal).player === Player.BLACK) {
+                moves.push(rightDiagonal);
+            }
+
+            return moves;
+
+
         } else { // Player.BLACK
+            if (location.row === 0) {
+                return [];
+            }
             if (board.getPiece(blackOptions[0]) === undefined) {
                 if (location.row === 6 && board.getPiece(blackOptions[1]) === undefined) {
                     return [blackOptions[0], blackOptions[1]];
